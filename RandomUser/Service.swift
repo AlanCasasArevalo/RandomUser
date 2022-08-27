@@ -2,7 +2,7 @@ import Foundation
 
 struct Service {
 
-    func get(from url: URL, completion:@escaping ([User]?) -> ()) {
+    func getUsers(from url: URL, completion:@escaping ([User]?) -> ()) {
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 return completion(.none)
