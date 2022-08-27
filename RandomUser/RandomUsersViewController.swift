@@ -4,12 +4,15 @@ class RandomUsersViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
+    let forCellReuseIdentifier = "UserCell"
     let service = Service()
     var users: [User]?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .cyan
-
+        setDelegateAndDataSource()
+        registerTableCell()
 
         let url = URL(string: "https://reqres.in/api/users?per_page=100")!
 
@@ -26,6 +29,10 @@ class RandomUsersViewController: UIViewController {
         tableView.dataSource = self
     }
 
+    func registerTableCell () {
+        tableView.register(UINib(nibName: "UserCell", bundle: nil), forCellReuseIdentifier: forCellReuseIdentifier)
+    }
+
 }
 
 extension RandomUsersViewController: UITableViewDelegate {
@@ -40,6 +47,9 @@ extension RandomUsersViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let user = users?[indexPath.row] else { return UITableViewCell() }
+        let cell = tableView.dequeueReusableCell(withIdentifier: forCellReuseIdentifier, for: indexPath) as! UserCell
+        cell.setupView(with: user)
+        return cell
     }
 }
