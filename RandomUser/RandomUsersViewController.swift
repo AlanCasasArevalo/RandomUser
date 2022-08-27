@@ -15,6 +15,9 @@ class RandomUsersViewController: UIViewController {
 
         service.getUsers(from: url) { users in
             self.users = users
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -33,7 +36,7 @@ extension RandomUsersViewController: UITableViewDelegate {
 
 extension RandomUsersViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        users?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
