@@ -39,6 +39,12 @@ extension RandomUsersViewController: UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         1
     }
+
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let user = users?[indexPath.row] else { return }
+        let detailVC = DetailViewController(user: user)
+        self.navigationController?.pushViewController(detailVC, animated: true)
+    }
 }
 
 extension RandomUsersViewController: UITableViewDataSource{
