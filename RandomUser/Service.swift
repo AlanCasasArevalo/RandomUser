@@ -9,8 +9,8 @@ struct Service {
             } else {
                 if let response = response as? HTTPURLResponse, let data = data {
                     if response.statusCode > 199 && response.statusCode < 299 {
-                        let result = try? JSONDecoder().decode(UserModel.self, from: data)
-                        return completion(result?.data)
+                        let result = try? JSONDecoder().decode(Users.self, from: data)
+                        return completion(result?.results)
                     }
                 }
                 completion(.none)
