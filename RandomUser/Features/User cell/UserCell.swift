@@ -22,11 +22,11 @@ class UserCell: UITableViewCell, ReusableView, NibLoadableView {
     }
     
     func setupView(with user: User) {
-        self.nameLabel.text = user.firstName
-        self.surnameLabel.text = user.lastName
+        self.nameLabel.text = user.name?.first
+        self.surnameLabel.text = user.name?.last
         self.emailLabel.text = user.email
         
-        guard let url = URL(string: user.avatar ?? "") else {
+        guard let url = URL(string: user.picture?.large ?? "") else {
             return
         }
         

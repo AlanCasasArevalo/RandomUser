@@ -14,9 +14,19 @@ class RandomUsersViewController: UIViewController {
         setDelegateAndDataSource()
         registerTableCell()
 
-        let url = URL(string: "https://reqres.in/api/users?per_page=100")!
+        let url = Constants.API.baseURL
+        var components = URLComponents()
 
-        service.getUsers(from: url) { users in
+        components.scheme = url.scheme
+        components.host = url.host
+        components.path = url.path + ""
+        components.queryItems = [
+            URLQueryItem(name: "appid", value: Constants.API.apiKey),
+            URLQueryItem(name: "fmt", value: "json"),
+            URLQueryItem(name: "results", value: "10")
+        ].compactMap { $0 }
+        
+        service.getUsers(from: components.url ?? URL(string: "https://randomuser.me/api")!) { users in
             self.users = users
             DispatchQueue.main.async {
                 self.tableView.reloadData()
